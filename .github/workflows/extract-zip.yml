@@ -1,0 +1,36 @@
+name: Extract CYMOR ASSISTANT zip
+
+on:
+  workflow_dispatch:        # run manually from the Actions tab
+  push:
+    paths:
+      - "cymor-assistant.zip"
+
+permissions:
+  contents: write
+
+jobs:
+  extract:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Unzip project into repo root
+        run: |
+          test -f cymor-assistant.zip || { echo "cymor-assistant.zip not found in repo root"; exit 1; }
+          unzip -q -o cymor-assistant.zip -d _extract
+          shopt -s dotglob
+          cp -r _extract/cymor-assistant/* .
+          rm -rf _extract cymor-assistant.zip
+
+      - name: Safety check (no secrets committed)
+        run: |
+          test ! -f backend/.env || { echo "backend/.env must not be committed"; exit 1; }
+
+      - name: Commit extracted files
+        run: |
+          git config user.name  "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A
+          git commit -m "Extract CYMOR ASSISTANT project" || echo "Nothing to commit"
+          git push
