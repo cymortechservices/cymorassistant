@@ -1,0 +1,21 @@
+# secrets & sessions
+.env
+.env.*
+!.env.example
+*.pem
+auth_info*/
+baileys_auth*/
+session*/
+
+# dependencies & builds
+node_modules/
+frontend/dist/
+coverage/
+
+# logs & temp
+*.log
+npm-debug.log*
+.DS_Store
+Thumbs.db
+tmp/
+*.zip

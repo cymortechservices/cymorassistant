@@ -1,0 +1,25 @@
+{
+  "name": "CYMOR ASSISTANT",
+  "description": "Personal WhatsApp AI receptionist with an admin dashboard. Powered by CYMOR TECH SERVICES.",
+  "keywords": ["whatsapp", "assistant", "baileys", "gemini", "kenya"],
+  "buildpacks": [{ "url": "heroku/nodejs" }],
+  "formation": {
+    "web": { "quantity": 1 },
+    "worker": { "quantity": 1 }
+  },
+  "env": {
+    "NODE_ENV": { "value": "production" },
+    "TIMEZONE": { "value": "Africa/Nairobi" },
+    "MONGODB_URI": { "description": "MongoDB Atlas connection string (include the database name, e.g. .../cymor-assistant?retryWrites=true&w=majority)." },
+    "GEMINI_API_KEY": { "description": "Google AI Studio (Gemini) API key." },
+    "GEMINI_MODEL": { "value": "gemini-2.5-flash", "description": "Gemini model name." },
+    "OWNER_PHONE_NUMBER": { "description": "Owner's WhatsApp number in international format, digits only (e.g. 2547XXXXXXXX)." },
+    "JWT_SECRET": { "generator": "secret", "description": "Signs dashboard sessions." },
+    "SESSION_ENCRYPTION_KEY": { "generator": "secret", "description": "Encrypts the stored WhatsApp session. BACK THIS UP: losing it forces a new QR scan." },
+    "DASHBOARD_USERNAME": { "description": "Dashboard login name." },
+    "DASHBOARD_PASSWORD_HASH": { "description": "bcrypt hash of the dashboard password (npm run hash -- \"your password\")." },
+    "APP_BASE_URL": { "description": "Your app URL, e.g. https://your-app-name.herokuapp.com" },
+    "ASSISTANT_ENABLED": { "value": "false", "description": "Initial state of the assistant (switchable later in the dashboard)." },
+    "NOTIFICATION_ENABLED": { "value": "true" }
+  }
+}
